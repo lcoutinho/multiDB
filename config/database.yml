@@ -5,36 +5,41 @@
 #   gem 'sqlite3'
 
 development:
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
-  pool: 10
-  username: root
-  password: root
-  database: development
+  adapter: sqlite3
+  pool: 5
+  database: db/development.sqlite3
 
   users:
-    adapter: mysql2
-    encoding: utf8
-    reconnect: false
-    pool: 10
-    username: root
-    password: root
-    database: users
-
-  logs:
-    adapter: mysql2
-    encoding: utf8
-    reconnect: false
-    pool: 10
-    username: root
-    password: root
-    database: logs
+    adapter: sqlite3
+    pool: 5
+    database: db/users.sqlite3
 
   users2:
     adapter: sqlite3
     pool: 5
     database: db/users2.sqlite3
+
+  users3:
+    adapter: sqlite3
+    pool: 5
+    database: db/users3.sqlite3
+
+  users4:
+    adapter: sqlite3
+    pool: 5
+    database: db/users4.sqlite3
+
+  users5:
+    adapter: sqlite3
+    pool: 5
+    database: db/users5.sqlite3
+
+  logs:
+    adapter: sqlite3
+    pool: 5
+    database: db/logs.sqlite3
+
+
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
