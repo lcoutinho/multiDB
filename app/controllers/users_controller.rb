@@ -30,74 +30,75 @@ class UsersController < ApplicationController
 
       logger.info 'Busca no BD completa...'
 
-    
-
-      @sameID_hash = {}
-
       x.report("WithHash"){
-      @users_hash.keys.each do |k|
-        #logger.info u
+        
+        @sameID_hash = { }
 
-        @temp = ''
+        @users_hash.keys.each do |k|
+          #logger.info u
 
-        if @users2_hash.has_key?(k) then
-          @temp = @temp + @users2_hash[k].name
-        end
+          @temp = ''
 
-        if @users3_hash.has_key?(k) then
-          @temp = @temp + @users3_hash[k].name
-        end
+          if @users2_hash.has_key?(k) then
+            @temp = @temp + @users2_hash[k].name
+          end
 
-        if @users4_hash.has_key?(k) then
-          @temp = @temp + @users4_hash[k].name
-        end
+          if @users3_hash.has_key?(k) then
+            @temp = @temp + @users3_hash[k].name
+          end
 
-        if @users5_hash.has_key?(k) then
-          @temp = @temp + @users5_hash[k].name
-        end
+          if @users4_hash.has_key?(k) then
+            @temp = @temp + @users4_hash[k].name
+          end
 
-        unless @temp.nil? || @temp == ''
-          @sameID_hash[k] = @users_hash[k].name + @temp
-        end
+          if @users5_hash.has_key?(k) then
+            @temp = @temp + @users5_hash[k].name
+          end
 
-      end }
+          unless @temp.nil? || @temp == ''
+            @sameID_hash[k] = @users_hash[k].name + @temp
+          end
 
-
-      @sameID = []
+        end 
+      }
 
       x.report('WithArrayLentoBagarai') {
-      @users.each do |u|
-
-        #logger.info 'User ' + u.id.to_s
-
-        @temp = ''
-        @u2 = (@users2.detect {|a| a.id == u.id})
-        @u3 = (@users3.detect {|a| a.id == u.id})
-        @u4 = (@users4.detect {|a| a.id == u.id})
-        @u5 = (@users5.detect {|a| a.id == u.id})
-
-        unless @u2.nil?
-          @temp = @temp + @u2.name
-        end
-
-        unless @u3.nil?
-          @temp = @temp + @u3.name
-        end
-
-        unless @u4.nil?
-          @temp = @temp + @u4.name
-        end
-
-        unless @u5.nil?
-          @temp = @temp + @u5.name
-        end
-
-        unless @temp.nil? || @temp == ''
-          @sameID.push(u.id => u.name + @temp)
-        end
         
-      end }
-      
+        @sameID = []
+        
+        @users.each do |u|
+
+          #logger.info 'User ' + u.id.to_s
+
+          @temp = ''
+          @u2 = (@users2.detect {|a| a.id == u.id})
+          @u3 = (@users3.detect {|a| a.id == u.id})
+          @u4 = (@users4.detect {|a| a.id == u.id})
+          @u5 = (@users5.detect {|a| a.id == u.id})
+
+          unless @u2.nil?
+            @temp = @temp + @u2.name
+          end
+
+          unless @u3.nil?
+            @temp = @temp + @u3.name
+          end
+
+          unless @u4.nil?
+            @temp = @temp + @u4.name
+          end
+
+          unless @u5.nil?
+            @temp = @temp + @u5.name
+          end
+
+          unless @temp.nil? || @temp == ''
+            @sameID.push(u.id => u.name + @temp)
+          end
+          
+        end 
+      }
+
     end #end benchmarck
 
   end
