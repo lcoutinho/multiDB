@@ -20,13 +20,55 @@ class UsersController < ApplicationController
     @users4 = User.on_db(:users4).limit(800)
     @users5 = User.on_db(:users5).limit(800)
 
-    logger.info 'Busca no BD completa...'
-
-    @sameID = []
     Benchmark.bmbm do |x|
+      x.report("CreateHash!") { @users_hash = Hash[*@users.map{ |p| [p.id, p] }.flatten] }
+      @users2_hash = Hash[*@users2.map{ |p| [p.id, p] }.flatten]
+      @users3_hash = Hash[*@users3.map{ |p| [p.id, p] }.flatten]
+      @users4_hash = Hash[*@users4.map{ |p| [p.id, p] }.flatten]
+      @users5_hash = Hash[*@users5.map{ |p| [p.id, p] }.flatten]
+    
+
+      logger.info 'Busca no BD completa...'
+
+    
+
+      @sameID_hash = {}
+
+      x.report("WithHash"){
+      @users_hash.keys.each do |k|
+        #logger.info u
+
+        @temp = ''
+
+        if @users2_hash.has_key?(k) then
+          @temp = @temp + @users2_hash[k].name
+        end
+
+        if @users3_hash.has_key?(k) then
+          @temp = @temp + @users3_hash[k].name
+        end
+
+        if @users4_hash.has_key?(k) then
+          @temp = @temp + @users4_hash[k].name
+        end
+
+        if @users5_hash.has_key?(k) then
+          @temp = @temp + @users5_hash[k].name
+        end
+
+        unless @temp.nil? || @temp == ''
+          @sameID_hash[k] = @users_hash[k].name + @temp
+        end
+
+      end }
+
+
+      @sameID = []
+
+      x.report('WithArrayLentoBagarai') {
       @users.each do |u|
 
-        logger.info 'User ' + u.id.to_s
+        #logger.info 'User ' + u.id.to_s
 
         @temp = ''
         @u2 = (@users2.detect {|a| a.id == u.id})
@@ -51,11 +93,12 @@ class UsersController < ApplicationController
         end
 
         unless @temp.nil? || @temp == ''
-          @sameID.push(u.id => @temp)
+          @sameID.push(u.id => u.name + @temp)
         end
         
-      end
-    end
+      end }
+      
+    end #end benchmarck
 
   end
 
